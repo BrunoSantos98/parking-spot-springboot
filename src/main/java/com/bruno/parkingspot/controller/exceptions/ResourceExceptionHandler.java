@@ -40,4 +40,12 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> argumentoIlegal(ResourceNotFoundException e, HttpServletRequest request){
+        String error = "Argumento invalido, o argumento não pode ser do tipo nulo";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request
+                .getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }

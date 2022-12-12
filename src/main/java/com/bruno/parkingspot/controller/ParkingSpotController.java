@@ -56,7 +56,8 @@ public class ParkingSpotController {
         if(parkingSpotModelOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("parking spot not found");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotModelOptional.get());
+        ParkingSpotDTO parkingSpotDTO = new ParkingSpotDTO(parkingSpotModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotDTO);
     }
 
     @DeleteMapping("{id}")

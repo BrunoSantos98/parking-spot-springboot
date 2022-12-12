@@ -1,9 +1,11 @@
 package com.bruno.parkingspot.dtos;
 
+import com.bruno.parkingspot.models.ParkingSpotModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class ParkingSpotDTO {
     @NotBlank
@@ -23,6 +25,17 @@ public class ParkingSpotDTO {
     private String apartment;
     @NotBlank
     private String block;
+
+    public ParkingSpotDTO(ParkingSpotModel psModel) {
+        this.apartment = psModel.getApartment();
+        this.block = psModel.getBlock();
+        this.brandCar = psModel.getBrandCar();
+        this.parkingSpotNumber = psModel.getParkingSpotNumber();
+        this.colorCar = psModel.getColorCar();
+        this.licensePlateCar = psModel.getLicensePlateCar();
+        this.modelCar = psModel.getModelCar();
+        this.responsibleName = psModel.getResponsibleName();
+    }
 
     public String getParkingSpotNumber() {
         return parkingSpotNumber;
