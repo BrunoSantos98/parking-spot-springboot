@@ -43,6 +43,10 @@ public class ParkingSpotService {
         return parkingSpotRepository.findById(id);
     }
 
+    public List<ParkingSpotModel> getParkingSpotForBlock(String block){
+        return parkingSpotRepository.findByBlock(block);
+    }
+
     @Transactional
     public void delete(ParkingSpotModel parkingSpotModel) {
         parkingSpotRepository.delete(parkingSpotModel);

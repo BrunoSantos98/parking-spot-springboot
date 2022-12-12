@@ -6,7 +6,6 @@ import com.bruno.parkingspot.services.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,8 +41,13 @@ public class ParkingSpotController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(page=0, size=10,sort = "id",direction = Sort.Direction.ASC)Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
+    public ResponseEntity<Object> getAllParkingSpots(@PageableDefault(page=0, size=10,sort = "id",
+            direction = Sort.Direction.ASC)Pageable pageable, @RequestParam(required = false) String block){
+        List<ParkingSpotModel> listBlocks = parkingSpotService.getParkingSpotForBlock(block);
+        if(listBlocks.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(listBlocks);
     }
 
     @GetMapping("/{id}")
