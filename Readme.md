@@ -7,8 +7,8 @@
   - [ ]  Criar uma entidade carro e separar da entidade parkingSpot.
   - [ ]  Fazer a relação 1:1 entre as entidades carro e parkingSpot.
   - [ ]  inserir parâmetros e filtros na busca por metodo GET(all).
-  - [ ]  Criar excessões e tratar possíveis erros da aplicação.
-  - [ ]  Criar metodos especificos de validação retirando os if-elses dos metodos do controller.
+  - [x]  Criar excessões e tratar possíveis erros da aplicação.
+  - [x]  Criar metodos especificos de validação retirando os if-elses dos metodos do controller.
 
 ## 💻 Pré Requisitos 💻:
 
