@@ -4,11 +4,12 @@
 
 - 🚧 melhorias a serem feitas 🚧 :
 
-  - [ ]  Criar uma entidade carro e separar da entidade parkingSpot.
-  - [ ]  Fazer a relação 1:1 entre as entidades carro e parkingSpot.
+  - [x]  Criar uma entidade carro e separar da entidade parkingSpot.
+  - [x]  Fazer a relação 1:1 entre as entidades carro e parkingSpot.
   - [x]  inserir parâmetros e filtros na busca por metodo GET(all).
   - [x]  Criar excessões e tratar possíveis erros da aplicação.
   - [x]  Criar metodos especificos de validação retirando os if-elses dos metodos do controller.
+  - [ ]  colocar metodo patch no ParkingSpot para poder atualizar o carro(quem tem) para a vaga do morador.
 
 ## 💻 Pré Requisitos 💻:
 
