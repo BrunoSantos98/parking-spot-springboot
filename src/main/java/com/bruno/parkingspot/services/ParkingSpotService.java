@@ -2,7 +2,6 @@ package com.bruno.parkingspot.services;
 
 import com.bruno.parkingspot.dtos.ParkingSpotDTO;
 import com.bruno.parkingspot.models.ParkingSpotModel;
-import com.bruno.parkingspot.repositories.CarRepository;
 import com.bruno.parkingspot.repositories.ParkingSpotRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +58,16 @@ public class ParkingSpotService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
         }else{
             return ResponseEntity.ok().body("");
+        }
+    }
+
+    public ResponseEntity<Object> getValidations(List<ParkingSpotModel> listBlocks, String block, Pageable pageable) {
+        if(block == null){
+            return ResponseEntity.status(HttpStatus.OK).body(findAll(pageable));
+        }else if(!listBlocks.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(listBlocks);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This block not have residents");
         }
     }
 }

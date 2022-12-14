@@ -41,13 +41,10 @@ public class ParkingSpotController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getAllParkingSpots(@PageableDefault(page=0, size=10,sort = "id",
+    public ResponseEntity<Object> getAllParkingSpots(@PageableDefault(page=0, size=10,sort = "block",
             direction = Sort.Direction.ASC)Pageable pageable, @RequestParam(required = false) String block){
         List<ParkingSpotModel> listBlocks = parkingSpotService.getParkingSpotForBlock(block);
-        if(listBlocks.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(listBlocks);
+        return parkingSpotService.getValidations(listBlocks,block,pageable);
     }
 
     @GetMapping("/{id}")

@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,10 +37,7 @@ public class CarController {
     @GetMapping
     public ResponseEntity<Object> getAllCars(@RequestParam(required = false) String licensePlate){
         List<CarModel> listCars = carService.getLicensePlateCar(licensePlate);
-        if(listCars.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body(carService.findAll());
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(listCars);
+        return carService.getValidations(listCars,licensePlate);
     }
 
     @GetMapping("/{id}")

@@ -51,4 +51,15 @@ public class CarService {
     private boolean existsByLicensePlateCar(String licensePlateCar) {
         return carRepository.existsByLicensePlateCar(licensePlateCar);
     }
+
+    public ResponseEntity<Object> getValidations(List<CarModel> listCars, String licensePlate) {
+        if(licensePlate == null){
+            listCars = findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(listCars);
+        }else if(!listCars.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(listCars);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License plate not found, please try again!");
+        }
+    }
 }
