@@ -9,8 +9,9 @@
   - [x]  inserir parâmetros e filtros na busca por metodo GET(all).
   - [x]  Criar excessões e tratar possíveis erros da aplicação.
   - [x]  Criar metodos especificos de validação retirando os if-elses dos metodos do controller.
-  - [ ]  colocar metodo patch no ParkingSpot para poder atualizar o carro(quem tem) para a vaga do morador.
+  - [x]  colocar metodo patch no ParkingSpot para poder atualizar o carro(quem tem) para a vaga do morador.
   - [ ]  Adicionar interfaces entre services e controller.
+  - [ ]  Adicionar entidade dependente e relacionamento com parkingSpot.
 
 ## 💻 Pré Requisitos 💻:
 
