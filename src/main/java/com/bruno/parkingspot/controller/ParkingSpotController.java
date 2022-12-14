@@ -27,10 +27,10 @@ import java.util.UUID;
 public class ParkingSpotController {
 
     @Autowired
-    ParkingSpotService parkingSpotService;
+    private ParkingSpotService parkingSpotService;
 
     @Autowired
-    CarService carService;
+    private CarService carService;
 
     @PostMapping
     public ResponseEntity<Object> savingParkingSpot(@RequestBody @Valid ParkingSpotDTO parkingSpotDTO){
