@@ -31,7 +31,7 @@ public class CarService {
         return carRepository.findById(id);
     }
 
-    public List<CarModel> getLicensePlateCar(String licensePlate){
+    public CarModel getLicensePlateCar(String licensePlate){
         return carRepository.findByLicensePlate(licensePlate);
     }
 
@@ -52,9 +52,10 @@ public class CarService {
         return carRepository.existsByLicensePlateCar(licensePlateCar);
     }
 
-    public ResponseEntity<Object> getValidations(List<CarModel> listCars, String licensePlate) {
+    public ResponseEntity<Object> getValidations(String licensePlate) {
+        List<CarModel> listCars = null;
         if(licensePlate == null){
-            listCars = findAll();
+             listCars = findAll();
             return ResponseEntity.status(HttpStatus.OK).body(listCars);
         }else if(!listCars.isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body(listCars);

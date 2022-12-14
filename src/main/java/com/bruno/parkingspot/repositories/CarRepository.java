@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface CarRepository extends JpaRepository<CarModel, UUID> {
 
     @Query(value = "SELECT * FROM TB_CAR WHERE licensePlateCar = ?", nativeQuery = true)
-    List<CarModel> findByLicensePlate(String name);
+    CarModel findByLicensePlate(String name);
 
     boolean existsByLicensePlateCar(String licensePlateCar);
 }

@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,8 +35,8 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<Object> getAllCars(@RequestParam(required = false) String licensePlate){
-        List<CarModel> listCars = carService.getLicensePlateCar(licensePlate);
-        return carService.getValidations(listCars,licensePlate);
+        CarModel car = carService.getLicensePlateCar(licensePlate);
+        return carService.getValidations(licensePlate);
     }
 
     @GetMapping("/{id}")

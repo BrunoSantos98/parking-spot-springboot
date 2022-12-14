@@ -89,15 +89,13 @@ public class ParkingSpotController {
     @PatchMapping("/{id}/car/{licensePlate}")
     public ResponseEntity<Object> addCarInParkingSpot(@PathVariable("id") UUID id,
                                                       @PathVariable("licensePlate") String licensePlate){
-        List<CarModel> car = carService.getLicensePlateCar(licensePlate);
+        CarModel car = carService.getLicensePlateCar(licensePlate);
         Optional<ParkingSpotModel> parkingSpotModel = parkingSpotService.findById(id);
-        if(car.isEmpty()){
+        if(car==null){
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("License Plate not found");
-        }else if(parkingSpotModel == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot ID not found");
         }else{
             ParkingSpotModel psModel = parkingSpotModel.get();
-            psModel.setCar(car.get(0));
+            psModel.setCar(car);
             parkingSpotService.save(psModel);
             return ResponseEntity.status(HttpStatus.OK).body(psModel);
         }
