@@ -1,11 +1,15 @@
 package com.bruno.parkingspot.services;
 
+import com.bruno.parkingspot.dtos.ParkingSpotDTO;
 import com.bruno.parkingspot.models.ParkingSpotModel;
+import com.bruno.parkingspot.repositories.CarRepository;
 import com.bruno.parkingspot.repositories.ParkingSpotRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +25,6 @@ public class ParkingSpotService {
     @Transactional
     public ParkingSpotModel save(ParkingSpotModel parkingSpotModel) {
         return parkingSpotRepository.save(parkingSpotModel);
-    }
-
-    public boolean existsByLicensePlateCar(String licensePlateCar){
-        return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
     }
 
     public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
@@ -50,5 +50,15 @@ public class ParkingSpotService {
     @Transactional
     public void delete(ParkingSpotModel parkingSpotModel) {
         parkingSpotRepository.delete(parkingSpotModel);
+    }
+
+    public ResponseEntity<Object> postMethodValidations(ParkingSpotDTO parkingSpotDTO) {
+        if(existsByParkingSpotNumber(parkingSpotDTO.getParkingSpotNumber())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
+        }else if(existsByApartmentAndBlock(parkingSpotDTO.getApartment(), parkingSpotDTO.getBlock())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
+        }else{
+            return ResponseEntity.ok().body("");
+        }
     }
 }
