@@ -1,5 +1,6 @@
 package com.bruno.parkingspot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class CarModel implements Serializable {
     private String modelCar;
     @Column(nullable = false,length = 25)
     private String colorCar;
+    @JsonIgnore
     @OneToOne(mappedBy = "car")
     private ParkingSpotModel parkingSpotModel;
 

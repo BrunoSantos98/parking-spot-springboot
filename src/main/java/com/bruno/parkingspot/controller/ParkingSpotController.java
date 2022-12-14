@@ -1,7 +1,9 @@
 package com.bruno.parkingspot.controller;
 
 import com.bruno.parkingspot.dtos.ParkingSpotDTO;
+import com.bruno.parkingspot.models.CarModel;
 import com.bruno.parkingspot.models.ParkingSpotModel;
+import com.bruno.parkingspot.services.CarService;
 import com.bruno.parkingspot.services.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +28,9 @@ public class ParkingSpotController {
 
     @Autowired
     ParkingSpotService parkingSpotService;
+
+    @Autowired
+    CarService carService;
 
     @PostMapping
     public ResponseEntity<Object> savingParkingSpot(@RequestBody @Valid ParkingSpotDTO parkingSpotDTO){
@@ -57,7 +62,7 @@ public class ParkingSpotController {
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotDTO);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteParkingSpot(@PathVariable (value="id" ) UUID id){
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
         if(parkingSpotModelOptional.isEmpty()){
@@ -67,7 +72,7 @@ public class ParkingSpotController {
         return ResponseEntity.status(HttpStatus.OK).body("parking spot delete successfully");
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateParkingSpot(@PathVariable(value="id") UUID id,
                                                     @RequestBody @Valid ParkingSpotDTO parkingSpotDTO){
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
@@ -79,5 +84,22 @@ public class ParkingSpotController {
         parkingSpotModel.setId(parkingSpotModelOptional.get().getId());
         parkingSpotModel.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
+    }
+
+    @PatchMapping("/{id}/car/{licensePlate}")
+    public ResponseEntity<Object> addCarInParkingSpot(@PathVariable("id") UUID id,
+                                                      @PathVariable("licensePlate") String licensePlate){
+        List<CarModel> car = carService.getLicensePlateCar(licensePlate);
+        Optional<ParkingSpotModel> parkingSpotModel = parkingSpotService.findById(id);
+        if(car.isEmpty()){
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("License Plate not found");
+        }else if(parkingSpotModel == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot ID not found");
+        }else{
+            ParkingSpotModel psModel = parkingSpotModel.get();
+            psModel.setCar(car.get(0));
+            parkingSpotService.save(psModel);
+            return ResponseEntity.status(HttpStatus.OK).body(psModel);
+        }
     }
 }
