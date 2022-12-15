@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +30,8 @@ public class ParkingSpotModel implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id",referencedColumnName = "id")
     private CarModel car;
+    @OneToMany(mappedBy = "parkingSpotModel", cascade = CascadeType.ALL)
+    private Set<DependentsModel> dependentsModel = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -83,5 +87,9 @@ public class ParkingSpotModel implements Serializable {
 
     public void setCar(CarModel car) {
         this.car = car;
+    }
+
+    public Set<DependentsModel> getDependentsModel() {
+        return dependentsModel;
     }
 }

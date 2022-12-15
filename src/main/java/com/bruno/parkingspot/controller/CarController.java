@@ -40,7 +40,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneParkingSpot(@PathVariable (value="id" ) UUID id){
+    public ResponseEntity<Object> getOneCar(@PathVariable (value="id" ) UUID id){
         Optional<CarModel> carModelOptional = carService.findById(id);
         if(carModelOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found by Id solicited");
@@ -49,7 +49,7 @@ public class CarController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deleteParkingSpot(@PathVariable (value="id" ) UUID id){
+    public ResponseEntity<Object> deleteCar(@PathVariable (value="id" ) UUID id){
         Optional<CarModel> carModelOptional = carService.findById(id);
         if(carModelOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found by Id solicited");
@@ -59,7 +59,7 @@ public class CarController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> updateParkingSpot(@PathVariable(value="id") UUID id,
+    public ResponseEntity<Object> updateCar(@PathVariable(value="id") UUID id,
                                                     @RequestBody @Valid CarModel carModel){
         Optional<CarModel> carModelOptional = carService.findById(id);
         if (carModelOptional.isEmpty()){
