@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -53,12 +54,13 @@ public class CarServiceImplementations implements CarService {
         return carRepository.existsByLicensePlateCar(licensePlateCar);
     }
 
-    public ResponseEntity<Object> getValidations(String licensePlate) {
-        List<CarModel> listCars = null;
+    public ResponseEntity<Object> getValidations(String licensePlate, CarModel car) {
+        List<CarModel> listCars = new ArrayList<>();
+        listCars.add(car);
         if(licensePlate == null){
             listCars = findAll();
             return ResponseEntity.status(HttpStatus.OK).body(listCars);
-        }else if(!listCars.isEmpty()){
+        }else if(!listCars.isEmpty() && listCars.get(0) != null){
             return ResponseEntity.status(HttpStatus.OK).body(listCars);
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License plate not found, please try again!");

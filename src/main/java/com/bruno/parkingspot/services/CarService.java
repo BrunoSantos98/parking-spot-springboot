@@ -19,5 +19,5 @@ public interface CarService {
     public void delete(CarModel carModel);
     public ResponseEntity<Object> postMethodValidations(CarModel carModel);
     public boolean existsByLicensePlateCar(String licensePlateCar);
-    public ResponseEntity<Object> getValidations(String licensePlate);
+    public ResponseEntity<Object> getValidations(String licensePlate, CarModel car);
 }

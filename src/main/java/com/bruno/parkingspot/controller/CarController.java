@@ -36,7 +36,7 @@ public class CarController {
     @GetMapping
     public ResponseEntity<Object> getAllCars(@RequestParam(required = false) String licensePlate){
         CarModel car = carService.getLicensePlateCar(licensePlate);
-        return carService.getValidations(licensePlate);
+        return carService.getValidations(licensePlate, car);
     }
 
     @GetMapping("/{id}")
