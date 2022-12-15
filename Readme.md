@@ -10,7 +10,7 @@
   - [x]  Criar excessões e tratar possíveis erros da aplicação.
   - [x]  Criar metodos especificos de validação retirando os if-elses dos metodos do controller.
   - [x]  colocar metodo patch no ParkingSpot para poder atualizar o carro(quem tem) para a vaga do morador.
-  - [ ]  Adicionar interfaces entre services e controller.
+  - [x]  Adicionar interfaces entre services e controller.
   - [ ]  Adicionar entidade dependente e relacionamento com parkingSpot.
 
 ## 💻 Pré Requisitos 💻:
