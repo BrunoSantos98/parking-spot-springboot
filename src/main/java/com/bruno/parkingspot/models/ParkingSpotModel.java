@@ -31,7 +31,7 @@ public class ParkingSpotModel implements Serializable {
     @JoinColumn(name = "car_id",referencedColumnName = "id")
     private CarModel car;
     @OneToMany(mappedBy = "parkingSpotModel", cascade = CascadeType.ALL)
-    private Set<DependentsModel> dependentsModel = new HashSet<>();
+    private Set<DependentsModel> dependents = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -89,7 +89,7 @@ public class ParkingSpotModel implements Serializable {
         this.car = car;
     }
 
-    public Set<DependentsModel> getDependentsModel() {
-        return dependentsModel;
+    public Set<DependentsModel> getDependents() {
+        return dependents;
     }
 }

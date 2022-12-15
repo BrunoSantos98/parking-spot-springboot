@@ -2,8 +2,10 @@ package com.bruno.parkingspot.controller;
 
 import com.bruno.parkingspot.dtos.ParkingSpotDTO;
 import com.bruno.parkingspot.models.CarModel;
+import com.bruno.parkingspot.models.DependentsModel;
 import com.bruno.parkingspot.models.ParkingSpotModel;
 import com.bruno.parkingspot.services.CarService;
+import com.bruno.parkingspot.services.DependentsService;
 import com.bruno.parkingspot.services.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -28,9 +30,6 @@ public class ParkingSpotController {
 
     @Autowired
     private ParkingSpotService parkingSpotService;
-
-    @Autowired
-    private CarService carService;
 
     @PostMapping
     public ResponseEntity<Object> savingParkingSpot(@RequestBody @Valid ParkingSpotDTO parkingSpotDTO){
@@ -86,18 +85,10 @@ public class ParkingSpotController {
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
     }
 
-    @PatchMapping("/{id}/car/{licensePlate}")
+    @PatchMapping("/{id}/add/{info}")
     public ResponseEntity<Object> addCarInParkingSpot(@PathVariable("id") UUID id,
-                                                      @PathVariable("licensePlate") String licensePlate){
-        CarModel car = carService.getLicensePlateCar(licensePlate);
-        Optional<ParkingSpotModel> parkingSpotModel = parkingSpotService.findById(id);
-        if(car==null){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("License Plate not found");
-        }else{
-            ParkingSpotModel psModel = parkingSpotModel.get();
-            psModel.setCar(car);
-            parkingSpotService.save(psModel);
-            return ResponseEntity.status(HttpStatus.OK).body(psModel);
-        }
+                                                      @PathVariable("info") String licensePlate){
+        ResponseEntity<Object> obj = parkingSpotService.patchMappingRule(id,licensePlate);
+        return obj;
     }
 }

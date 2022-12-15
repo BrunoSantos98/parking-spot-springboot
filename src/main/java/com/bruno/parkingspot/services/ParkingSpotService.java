@@ -20,4 +20,5 @@ public interface ParkingSpotService {
     public void delete(ParkingSpotModel parkingSpotModel);
     public ResponseEntity<Object> postMethodValidations(ParkingSpotDTO parkingSpotDTO);
     public ResponseEntity<Object> getValidations(List<ParkingSpotModel> listBlocks, String block, Pageable pageable);
+    public ResponseEntity<Object> patchMappingRule(UUID id, String info);
 }

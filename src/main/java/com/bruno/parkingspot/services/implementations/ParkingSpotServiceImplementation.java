@@ -1,8 +1,12 @@
 package com.bruno.parkingspot.services.implementations;
 
 import com.bruno.parkingspot.dtos.ParkingSpotDTO;
+import com.bruno.parkingspot.models.CarModel;
+import com.bruno.parkingspot.models.DependentsModel;
 import com.bruno.parkingspot.models.ParkingSpotModel;
 import com.bruno.parkingspot.repositories.ParkingSpotRepository;
+import com.bruno.parkingspot.services.CarService;
+import com.bruno.parkingspot.services.DependentsService;
 import com.bruno.parkingspot.services.ParkingSpotService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,12 @@ public class ParkingSpotServiceImplementation implements ParkingSpotService {
 
     @Autowired
     ParkingSpotRepository parkingSpotRepository;
+
+    @Autowired
+    private CarService carService;
+
+    @Autowired
+    private DependentsService dependentsService;
 
     @Transactional
     public ParkingSpotModel save(ParkingSpotModel parkingSpotModel) {
@@ -70,5 +80,38 @@ public class ParkingSpotServiceImplementation implements ParkingSpotService {
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This block not have residents");
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> patchMappingRule(UUID id, String info) {
+        switch(info.length()){
+            case 7:
+                CarModel car = carService.getLicensePlateCar(info);
+                Optional<ParkingSpotModel> parkingSpotModel = findById(id);
+                if(car==null){
+                    return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("License Plate not found");
+                }else{
+                    ParkingSpotModel psModel = parkingSpotModel.get();
+                    psModel.setCar(car);
+                    parkingSpotRepository.save(psModel);
+                    return ResponseEntity.status(HttpStatus.OK).body(psModel);
+                }
+
+            case 11:
+                DependentsModel dependentsModel = dependentsService.findByCpf(info);
+                ParkingSpotModel psModel = findById(id).get();
+                if(dependentsModel==null){
+                    return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("CPF not found");
+                }else{
+                    dependentsModel.setParkingSpotModel(psModel);
+                    dependentsService.save(dependentsModel);
+                    return ResponseEntity.status(HttpStatus.OK).body(dependentsModel);
+                }
+
+            default:
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Placa ou CPF nao encontrado, " +
+                        "por favor corrija os dados e faça uma nova solicitação");
+        }
+
     }
 }

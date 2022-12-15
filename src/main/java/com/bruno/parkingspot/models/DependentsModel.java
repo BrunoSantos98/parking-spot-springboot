@@ -3,6 +3,7 @@ package com.bruno.parkingspot.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Lazy;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -28,9 +29,9 @@ public class DependentsModel implements Serializable {
     private Date birthDate;
     @Column(nullable = false,length = 11,unique = true)
     private String cpf;
+    @ManyToOne
+    @JoinColumn(name = "parking_id")
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parking_spot_id")
     private ParkingSpotModel parkingSpotModel;
 
     public DependentsModel() {
