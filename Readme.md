@@ -12,6 +12,8 @@
   - [x]  colocar metodo patch no ParkingSpot para poder atualizar o carro(quem tem) para a vaga do morador.
   - [x]  Adicionar interfaces entre services e controller.
   - [x]  Adicionar entidade dependente e relacionamento com parkingSpot.
+  - [ ]  Adicionar metodos de autorização e Autenticação.
+  - [ ]  Corrigir os tratamentos de Erro que não estão tratando erros corretamente
 
 ## 💻 Pré Requisitos 💻:
 
