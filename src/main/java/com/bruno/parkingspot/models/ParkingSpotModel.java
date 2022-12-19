@@ -1,5 +1,6 @@
 package com.bruno.parkingspot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -29,6 +30,7 @@ public class ParkingSpotModel implements Serializable {
     private String block;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id",referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private CarModel car;
     @OneToMany(mappedBy = "parkingSpotModel", cascade = CascadeType.ALL)
     private Set<DependentsModel> dependents = new HashSet<>();

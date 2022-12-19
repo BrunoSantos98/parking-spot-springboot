@@ -41,6 +41,10 @@ public class ParkingSpotServiceImplementation implements ParkingSpotService {
         return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
     }
 
+    public List<ParkingSpotModel> getParkingSpotForBlock(String block){
+        return parkingSpotRepository.findByBlock(block);
+    }
+
     public boolean existsByApartmentAndBlock(String apartment, String block) {
         return parkingSpotRepository.existsByApartmentAndBlock(apartment,block);
     }
@@ -53,10 +57,6 @@ public class ParkingSpotServiceImplementation implements ParkingSpotService {
         return parkingSpotRepository.findById(id);
     }
 
-    public List<ParkingSpotModel> getParkingSpotForBlock(String block){
-        return parkingSpotRepository.findByBlock(block);
-    }
-
     @Transactional
     public void delete(ParkingSpotModel parkingSpotModel) {
         parkingSpotRepository.delete(parkingSpotModel);
@@ -66,7 +66,8 @@ public class ParkingSpotServiceImplementation implements ParkingSpotService {
         if(existsByParkingSpotNumber(parkingSpotDTO.getParkingSpotNumber())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
         }else if(existsByApartmentAndBlock(parkingSpotDTO.getApartment(), parkingSpotDTO.getBlock())){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Conflict: Parking Spot already registered for this apartment/block!");
         }else{
             return ResponseEntity.ok().body("");
         }
@@ -78,7 +79,7 @@ public class ParkingSpotServiceImplementation implements ParkingSpotService {
         }else if(!listBlocks.isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body(listBlocks);
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This block not have residents");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This block not have residents or doesn't exists");
         }
     }
 

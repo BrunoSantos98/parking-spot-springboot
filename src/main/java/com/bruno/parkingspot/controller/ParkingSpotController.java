@@ -1,11 +1,7 @@
 package com.bruno.parkingspot.controller;
 
 import com.bruno.parkingspot.dtos.ParkingSpotDTO;
-import com.bruno.parkingspot.models.CarModel;
-import com.bruno.parkingspot.models.DependentsModel;
 import com.bruno.parkingspot.models.ParkingSpotModel;
-import com.bruno.parkingspot.services.CarService;
-import com.bruno.parkingspot.services.DependentsService;
 import com.bruno.parkingspot.services.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -15,10 +11,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

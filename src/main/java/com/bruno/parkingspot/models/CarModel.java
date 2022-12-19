@@ -2,6 +2,9 @@ package com.bruno.parkingspot.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.context.annotation.Lazy;
 
 import java.io.Serializable;
 import java.util.UUID;
