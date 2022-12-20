@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -38,5 +41,9 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
         user = findByUsername(user.getUsername());
         String data = user.getUsername();
         return data;
+    }
+
+    public Optional<UserModel> findById(Long idUser) {
+        return userRepository.findById(idUser);
     }
 }

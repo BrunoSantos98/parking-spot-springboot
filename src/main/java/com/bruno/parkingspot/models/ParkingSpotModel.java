@@ -35,6 +35,19 @@ public class ParkingSpotModel implements Serializable {
     @OneToMany(mappedBy = "parkingSpotModel", cascade = CascadeType.ALL)
     private Set<DependentsModel> dependents = new HashSet<>();
 
+    public ParkingSpotModel() {
+    }
+
+    public ParkingSpotModel(UUID id, String parkingSpotNumber, LocalDateTime registrationDate,
+                            String responsibleName, String apartment, String block) {
+        this.id = id;
+        this.parkingSpotNumber = parkingSpotNumber;
+        this.registrationDate = registrationDate;
+        this.responsibleName = responsibleName;
+        this.apartment = apartment;
+        this.block = block;
+    }
+
     public UUID getId() {
         return id;
     }

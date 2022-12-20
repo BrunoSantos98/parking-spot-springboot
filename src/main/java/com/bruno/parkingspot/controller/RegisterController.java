@@ -1,6 +1,8 @@
 package com.bruno.parkingspot.controller;
 
+import com.bruno.parkingspot.models.RoleModel;
 import com.bruno.parkingspot.models.UserModel;
+import com.bruno.parkingspot.repositories.RoleRepository;
 import com.bruno.parkingspot.services.implementations.UserDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,7 +17,8 @@ public class RegisterController {
 
     @Autowired
     private UserDetailsServiceImplementation userImp;
-
+    @Autowired
+    private RoleRepository roleRepo;
 
     @PostMapping
     public ResponseEntity<Object> register(@RequestBody UserModel user){

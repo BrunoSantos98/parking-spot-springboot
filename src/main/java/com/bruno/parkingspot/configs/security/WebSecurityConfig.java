@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 public class WebSecurityConfig{
 
     @Bean
@@ -21,9 +19,9 @@ public class WebSecurityConfig{
        http
                .csrf().disable()
                .authorizeHttpRequests().requestMatchers("/register").permitAll()
-               .and().authorizeHttpRequests()
                .requestMatchers(HttpMethod.GET,"/cars/**","/parking-spot/**","/dependents/**").authenticated()
                .and().authorizeHttpRequests().requestMatchers("/**").hasAnyRole("ADMIN","DBA")
+               .and().authorizeHttpRequests()
                .anyRequest().authenticated()
                .and().httpBasic();
        return http.build();

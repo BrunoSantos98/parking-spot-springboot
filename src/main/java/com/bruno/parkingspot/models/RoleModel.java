@@ -18,6 +18,15 @@ public class RoleModel implements GrantedAuthority, Serializable {
     @Column(nullable = false,unique = true)
     private RoleName roleName;
 
+    public RoleModel(){
+
+    }
+
+    public RoleModel(RoleModel roleModel) {
+        this.id = roleModel.id;
+        this.roleName = roleModel.roleName;
+    }
+
     @Override
     public String getAuthority() {
         return this.roleName.toString();
